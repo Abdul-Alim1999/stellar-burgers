@@ -5,5 +5,6 @@ export * from './login';
 export * from './not-fount-404';
 export * from './profile';
 export * from './profile-orders';
+export * from './protected-page';
 export * from './register';
 export * from './reset-password';
