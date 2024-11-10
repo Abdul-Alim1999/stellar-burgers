@@ -1,7 +1,8 @@
 import { getOrdersApi, orderBurgerApi } from '@api';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { findAllByTestId } from '@testing-library/react';
-import { TConstructorIngredient, TOrder } from '@utils-types';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
+import { v4 as uuid4 } from 'uuid';
 
 type TInitialState = {
   constructorItems: {
@@ -48,11 +49,23 @@ const ordersSlice = createSlice({
   name: 'orders',
   initialState,
   reducers: {
-    addConstructorItem: (state, action) => {
-      if (action.payload.type === 'bun') {
-        state.constructorItems.bun = action.payload;
-      } else {
-        state.constructorItems.ingredients.push(action.payload);
+    addConstructorItem: {
+      prepare: (ingredient: TConstructorIngredient) => ({
+        payload: {
+          ...ingredient,
+          uniqueId: uuid4() // Генерация уникального идентификатора
+        }
+      }),
+      reducer: (
+        state,
+        action: PayloadAction<TConstructorIngredient & { uniqueId: string }>
+      ) => {
+        const item = action.payload;
+        if (item.type === 'bun') {
+          state.constructorItems.bun = item;
+        } else {
+          state.constructorItems.ingredients.push(item);
+        }
       }
     },
     deleteConstructorItemByIndex: (state, action) => {
