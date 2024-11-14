@@ -32,7 +32,6 @@ const initialState: TInitialState = {
 export const getUser = createAsyncThunk('user/getUser', async (_, thunkAPI) => {
   try {
     const data = await getUserApi();
-
     return thunkAPI.fulfillWithValue(data.user);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -44,7 +43,6 @@ export const getOrdersByUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const data = await getOrdersApi();
-
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -57,10 +55,8 @@ export const login = createAsyncThunk(
   async (fields: TLoginData, thunkAPI) => {
     try {
       const data = await loginUserApi(fields);
-
       setCookie('accessToken', data.accessToken);
       setCookie('refreshToken', data.refreshToken);
-
       return thunkAPI.fulfillWithValue(data.user);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -73,10 +69,8 @@ export const register = createAsyncThunk(
   async (fields: TRegisterData, thunkAPI) => {
     try {
       const data = await registerUserApi(fields);
-
       setCookie('accessToken', data.accessToken);
       setCookie('refreshToken', data.refreshToken);
-
       return thunkAPI.fulfillWithValue(data.user);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -89,7 +83,6 @@ export const updateUser = createAsyncThunk(
   async (fields: Partial<TUser>, thunkAPI) => {
     try {
       const data = await updateUserApi(fields);
-
       return thunkAPI.fulfillWithValue(data.user);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -114,7 +107,7 @@ const userSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as { message: string };
+        state.error = { message: action.error.message || 'Ошибка входа' };
       })
 
       .addCase(register.pending, (state) => {
@@ -128,7 +121,9 @@ const userSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as { message: string };
+        state.error = {
+          message: action.error.message || 'Ошибка регистрации'
+        };
       })
 
       .addCase(getUser.pending, (state) => {
@@ -142,10 +137,13 @@ const userSlice = createSlice({
       })
       .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as { message: string };
+        state.error = {
+          message:
+            action.error.message || 'Не удалось получить данные пользователя'
+        };
       })
 
-      .addCase(getOrdersByUser.pending, (state, action) => {
+      .addCase(getOrdersByUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -154,7 +152,9 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(getOrdersByUser.rejected, (state, action) => {
-        state.error = action.payload as { message: string };
+        state.error = {
+          message: action.error.message || 'Не удалось получить заказы'
+        };
         state.loading = false;
       })
 
@@ -169,7 +169,9 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as { message: string };
+        state.error = {
+          message: action.error.message || 'Не удалось обновить пользователя'
+        };
       });
   }
 });

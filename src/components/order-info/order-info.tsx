@@ -13,8 +13,6 @@ export const OrderInfo: FC = () => {
   const orderData = useSelector((state) => state.feeds.order);
   const dispatch = useDispatch();
 
-  console.log(orderData);
-
   useEffect(() => {
     dispatch(getFeedById(+number!));
   }, []);

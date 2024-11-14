@@ -19,10 +19,13 @@ export const getIngredients = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const data = await getIngredientsApi();
-
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Не удалось получить ингредиенты';
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
@@ -44,7 +47,7 @@ const ingredientsSlice = createSlice({
       })
       .addCase(getIngredients.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.error.message || 'Произошла неизвестная ошибка';
       });
   }
 });
