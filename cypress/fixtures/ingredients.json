@@ -12,8 +12,7 @@
       "price": 1255,
       "image": "https://code.s3.yandex.net/react/code/bun-02.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0941",
@@ -26,8 +25,7 @@
       "price": 424,
       "image": "https://code.s3.yandex.net/react/code/meat-01.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/meat-01-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/meat-01-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/meat-01-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa093e",
@@ -40,8 +38,7 @@
       "price": 988,
       "image": "https://code.s3.yandex.net/react/code/meat-03.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/meat-03-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/meat-03-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0942",
@@ -54,8 +51,7 @@
       "price": 90,
       "image": "https://code.s3.yandex.net/react/code/sauce-02.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/sauce-02-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/sauce-02-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0943",
@@ -68,8 +64,7 @@
       "price": 80,
       "image": "https://code.s3.yandex.net/react/code/sauce-04.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/sauce-04-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/sauce-04-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa093f",
@@ -82,8 +77,7 @@
       "price": 1337,
       "image": "https://code.s3.yandex.net/react/code/meat-02.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/meat-02-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/meat-02-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/meat-02-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0940",
@@ -96,8 +90,7 @@
       "price": 3000,
       "image": "https://code.s3.yandex.net/react/code/meat-04.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/meat-04-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/meat-04-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa093d",
@@ -110,8 +103,7 @@
       "price": 988,
       "image": "https://code.s3.yandex.net/react/code/bun-01.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/bun-01-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/bun-01-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0944",
@@ -124,8 +116,7 @@
       "price": 15,
       "image": "https://code.s3.yandex.net/react/code/sauce-03.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/sauce-03-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/sauce-03-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/sauce-03-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0945",
@@ -138,8 +129,7 @@
       "price": 88,
       "image": "https://code.s3.yandex.net/react/code/sauce-01.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/sauce-01-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/sauce-01-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/sauce-01-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0946",
@@ -152,8 +142,7 @@
       "price": 300,
       "image": "https://code.s3.yandex.net/react/code/mineral_rings.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/mineral_rings-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/mineral_rings-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/mineral_rings-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0947",
@@ -166,8 +155,7 @@
       "price": 874,
       "image": "https://code.s3.yandex.net/react/code/sp_1.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/sp_1-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/sp_1-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/sp_1-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0948",
@@ -180,8 +168,7 @@
       "price": 762,
       "image": "https://code.s3.yandex.net/react/code/core.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/core-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/core-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/core-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa0949",
@@ -194,8 +181,7 @@
       "price": 4400,
       "image": "https://code.s3.yandex.net/react/code/salad.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/salad-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/salad-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/salad-large.png"
     },
     {
       "_id": "643d69a5c3f7b9001cfa094a",
@@ -208,8 +194,7 @@
       "price": 4142,
       "image": "https://code.s3.yandex.net/react/code/cheese.png",
       "image_mobile": "https://code.s3.yandex.net/react/code/cheese-mobile.png",
-      "image_large": "https://code.s3.yandex.net/react/code/cheese-large.png",
-      "__v": 0
+      "image_large": "https://code.s3.yandex.net/react/code/cheese-large.png"
     }
   ]
 }

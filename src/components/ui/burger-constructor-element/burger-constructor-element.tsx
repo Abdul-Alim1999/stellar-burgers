@@ -16,7 +16,7 @@ export const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> =
     }) => (
       <li
         className={`${styles.element} mb-4 mr-2`}
-        data-cy={'ingredient_element'} //
+        data-cy='ingredient-constructor'
       >
         <MoveButton
           handleMoveDown={handleMoveDown}
@@ -24,7 +24,10 @@ export const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> =
           isUpDisabled={index === 0}
           isDownDisabled={index === totalItems - 1}
         />
-        <div className={`${styles.element_fullwidth} ml-2`}>
+        <div
+          className={`${styles.element_fullwidth} ml-2`}
+          data-cy='ingredient-constructor-without-button'
+        >
           <ConstructorElement
             text={ingredient.name}
             price={ingredient.price}

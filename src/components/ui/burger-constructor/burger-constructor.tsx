@@ -18,25 +18,20 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
   onOrderClick,
   closeOrderModal
 }) => (
-  <section
-    className={styles.burger_constructor}
-    data-cy={'constructor_section'} //
-  >
+  <section className={styles.burger_constructor}>
     {constructorItems.bun._id ? (
-      <div className={`${styles.element} mb-4 mr-4`}>
+      <div className={`${styles.element} mb-4 mr-4`} data-cy='bun-constructor'>
         <ConstructorElement
           type='top'
           isLocked
           text={`${constructorItems.bun.name} (верх)`}
           price={constructorItems.bun.price}
           thumbnail={constructorItems.bun.image}
-          data-cy={'bun_element'} //
         />
       </div>
     ) : (
       <div
         className={`${styles.noBuns} ${styles.noBunsTop} ml-8 mb-4 mr-5 text text_type_main-default`}
-        data-cy={'no_bun_text_1'} //
       >
         Выберите булки
       </div>
@@ -56,7 +51,6 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
       ) : (
         <div
           className={`${styles.noBuns} ml-8 mb-4 mr-5 text text_type_main-default`}
-          data-cy={'no_ingredients_text'}
         >
           Выберите начинку
         </div>
@@ -75,12 +69,11 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
     ) : (
       <div
         className={`${styles.noBuns} ${styles.noBunsBottom} ml-8 mb-4 mr-5 text text_type_main-default`}
-        data-cy={'no_bun_text_2'}
       >
         Выберите булки
       </div>
     )}
-    <div className={`${styles.total} mt-10 mr-4`} data-cy={'new_order_total'}>
+    <div className={`${styles.total} mt-10 mr-4`} data-cy='order'>
       <div className={`${styles.cost} mr-10`}>
         <p className={`text ${styles.text} mr-2`}>{price}</p>
         <CurrencyIcon type='primary' />

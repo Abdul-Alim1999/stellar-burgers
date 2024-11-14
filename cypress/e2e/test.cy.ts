@@ -1,119 +1,132 @@
-const API_URL = Cypress.env('BURGER_API_URL');
+import cypress from 'cypress';
+import * as order from '../fixtures/order.json';
 
-Cypress.on('uncaught:exception', () => {
-  return false;
-});
+const main = '[data-cy="main"]';
+const bun = '[data-cy="bun"]';
+const sauce = '[data-cy="sauce"]';
+const modals = '[data-cy="modal"]';
+const mainConstructor = '[data-cy="ingredient-constructor"]';
+const bunConstructor = '[data-cy="bun-constructor"]';
 
-beforeEach(() => {
-  window.localStorage.setItem('refreshToken', 'testRefreshToken');
-  cy.setCookie('accessToken', 'testAccessToken');
-
-  // ingredients
-  cy.fixture('ingredients.json').then((ingredients) => {
-    cy.intercept(
-      {
-        method: 'GET',
-        url: `${API_URL}/ingredients`
-      },
-      ingredients
-    ).as('getIngredients');
+describe('проверка конструктора', function () {
+  beforeEach(function () {
+    cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients' }).as(
+      'getIngredients'
+    );
+    cy.intercept('POST', 'api/orders', { fixture: 'order' }).as('postOrder');
+    cy.intercept('GET', 'api/auth/user', { fixture: 'user' }).as('getUser');
+    cy.visit('/');
   });
 
-  // feed
-  cy.fixture('orders.json').then((orders) => {
-    cy.intercept(
-      {
-        method: 'GET',
-        url: `${API_URL}/orders/all`
-      },
-      orders
-    ).as('getOrders');
+  this.afterAll(() => {
+    cy.clearCookie('accessToken');
+    localStorage.removeItem('refreshToken');
   });
 
-  // auth
-  cy.fixture('user.json').then((user) => {
-    cy.intercept(
-      {
-        method: 'GET',
-        url: `${API_URL}/auth/user`
-      },
-      user
-    ).as('getUser');
+  it('должен проверить отрисовку компонента', function () {
+    cy.get(bun).should('exist');
+    cy.get(main).should('exist');
+    cy.get(sauce).should('exist');
   });
 
-  cy.visit('http://localhost:4000/');
-  cy.wait('@getIngredients');
-});
+  it('должен удалить/добавить ингредиент и булки в конструкторе', function () {
+    const bunStore = cy.get(bun).first().children();
+    const mainStore = cy.get(main).first().children();
+    const mainStoreSecond = cy.get(main).first().next().children();
 
-afterEach(() => {
-  cy.clearAllCookies();
-  cy.clearAllLocalStorage();
-});
+    bunStore.last().click();
+    mainStore.last().click();
+    mainStoreSecond.last().click();
 
-describe('Проверка работоспособности приложения', () => {
-  const noBunSelector1 = `[data-cy=no_bun_text_1]`;
-  const noBunSelector2 = `[data-cy=no_bun_text_2]`;
-  const noIngredientsSelector = `[data-cy=no_ingredients_text]`;
-  const bunSelector = `[data-cy=bun_0]`;
-  const ingredientSelector = `[data-cy=ingredient_0]`;
+    cy.get(bunConstructor).contains('Краторная булка N-200i');
+    cy.get(mainConstructor).contains('Биокотлета из марсианской Магнолии');
+    cy.get(mainConstructor).contains('Филе Люминесцентного тетраодонтимформа');
 
-  it('сервис должен быть доступен по адресу localhost:4000', () => {});
+    cy.get('[data-cy=ingredient-constructor-without-button]')
+      .children()
+      .children()
+      .children()
+      .last()
+      .click();
 
-  it('есть возможность добавлять булку и ингридиенты', () => {
-    cy.get(noBunSelector1).as('noBunText1');
-    cy.get(noBunSelector2).as('noBunText2');
-    cy.get(noIngredientsSelector).as('noIngredientsText');
-    cy.get(bunSelector + ` button`).as('bun');
-    cy.get(ingredientSelector + ` button`).as('ingredient');
-
-    // Проверяем пустоту перед добавлением
-    cy.get('@noBunText1').contains('Выберите булки');
-    cy.get('@noBunText2').contains('Выберите булки');
-    cy.get('@noIngredientsText').contains('Выберите начинку');
-
-    cy.get('@bun').click();
-    cy.get('@ingredient').click({ multiple: true });
-
-    cy.get(`[data-cy=constructor_section]`).contains('булка');
-    cy.get(`[data-cy=ingredient_element]`);
+    cy.get(mainConstructor)
+      .not('Филе Люминесцентного тетраодонтимформа')
+      .contains('Биокотлета из марсианской Магнолии');
   });
 
-  it('проверка открытия и закрытия модального окна ингридиента', () => {
-    const ingredient = cy.get(bunSelector);
-    ingredient.click();
+  describe('проверка модального окна', function () {
+    it('должен проверить открытия модального окна на кнопку', function () {
+      cy.get(modals).should('not.exist');
+      cy.get(bun).first().click();
+      cy.get(modals).should('exist');
+    });
 
-    cy.get(`[data-cy=ingredient_modal]`);
-    cy.get(`[data-cy=close_modal_btn]`).click();
+    it('должен проверить закрытия модального окна на кнопку', function () {
+      cy.get(bun).first().click();
+      cy.get('[data-cy="modal-close-button"]').first().click();
+      cy.get(modals).should('not.exist');
+    });
+
+    it('должен проверить закрытия модального окна по оверлею', function () {
+      cy.get(bun).first().click();
+      cy.get('[data-cy="modal-close-overlay"]').first().click({ force: true });
+      cy.get(modals).should('not.exist');
+    });
   });
 
-  it('проверка нового заказа', () => {
-    const bun = cy.get(bunSelector + ` button`);
-    const ingredient = cy.get(ingredientSelector + ` button`);
-    bun.click();
-    ingredient.click({ multiple: true });
+  describe('проверка оформления заказа', function () {
+    beforeEach(function () {
+      cy.setCookie('accessToken', 'token');
+      cy.reload();
+      cy.wait('@getUser');
+    });
 
-    cy.get(`[data-cy=new_order_total] button`).click();
+    it('должен проверить открытия модального окна при нажатии на кнопку Оформить заказ', function () {
+      const bunStore = cy.get(bun).first().children();
+      const mainStore = cy.get(main).first().children();
+      const mainStoreSecond = cy.get(main).first().next().children();
 
-    cy.fixture('newOrder.json').then((newOrder) => {
-      cy.intercept(
-        {
-          method: 'POST',
-          url: `${API_URL}/orders`
-        },
-        newOrder
-      ).as('newOrder');
+      bunStore.last().click();
+      mainStore.last().click();
+      mainStoreSecond.last().click();
 
-      cy.get(`[data-cy=new_order_number]`).contains(newOrder.order.number);
-      cy.get(`[data-cy=close_modal_btn]`).first().click({ force: true });
+      cy.get("[data-cy='order']").contains('Оформить заказ').click();
+      cy.get(modals).should('exist');
+      cy.get(modals).contains(order.order.number.toString());
+    });
 
-      // Проверяем пустоту после закрытия модалки
-      cy.get(noBunSelector1).as('noBunText1');
-      cy.get(noBunSelector2).as('noBunText2');
-      cy.get(noIngredientsSelector).as('noIngredientsText');
+    describe('проверка закрытия модального окна', function () {
+      beforeEach(function () {
+        const bunStore = cy.get(bun).first().children();
+        bunStore.last().click();
 
-      cy.get('@noBunText1').contains('Выберите булки');
-      cy.get('@noBunText2').contains('Выберите булки');
-      cy.get('@noIngredientsText').contains('Выберите начинку');
+        cy.get("[data-cy='order']").contains('Оформить заказ').click();
+      });
+
+      it('должен проверить закрытия модального окна по кнопке', function () {
+        cy.get('[data-cy="modal-close-button"]').first().click();
+        cy.get(modals).should('not.exist');
+      });
+
+      it('должен проверить закрытия модального окна по оверлею', function () {
+        cy.get('[data-cy="modal-close-overlay"]')
+          .first()
+          .click({ force: true });
+        cy.get(modals).should('not.exist');
+      });
+    });
+
+    describe('проверка очистки конструктора', function () {
+      it('должен проверить на очистку конструктора', function () {
+        const bunStore = cy.get(bun).first().children();
+        bunStore.last().click();
+
+        cy.get("[data-cy='order']").contains('Оформить заказ').click();
+        cy.get('[data-cy="modal-close-button"]').first().click();
+
+        cy.get(bunConstructor).should('not.exist');
+        cy.get(mainConstructor).should('not.exist');
+      });
     });
   });
 });
