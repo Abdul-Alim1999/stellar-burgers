@@ -101,6 +101,12 @@ const ordersSlice = createSlice({
       .addCase(requestOrder.fulfilled, (state, action) => {
         state.orderModalData = action.payload;
         state.error = null;
+        state.orderRequest = false;
+
+        state.constructorItems = {
+          bun: { price: 0 },
+          ingredients: []
+        };
       })
       .addCase(requestOrder.rejected, (state, action) => {
         state.error = action.payload as string;

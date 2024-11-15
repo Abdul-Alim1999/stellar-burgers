@@ -123,7 +123,6 @@ describe('проверка конструктора', function () {
 
         cy.get("[data-cy='order']").contains('Оформить заказ').click();
         cy.get('[data-cy="modal-close-button"]').first().click();
-
         cy.get(bunConstructor).should('not.exist');
         cy.get(mainConstructor).should('not.exist');
       });

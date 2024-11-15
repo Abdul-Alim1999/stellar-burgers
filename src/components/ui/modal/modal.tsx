@@ -18,6 +18,7 @@ export const ModalUI: FC<TModalUIProps> = memo(
             className={styles.button}
             type='button'
             data-cy='modal-close-button'
+            // data-cy='closeButton'
           >
             <CloseIcon type='primary' onClick={onClose} />
           </button>
