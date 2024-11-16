@@ -7,6 +7,7 @@ const sauce = '[data-cy="sauce"]';
 const modals = '[data-cy="modal"]';
 const mainConstructor = '[data-cy="ingredient-constructor"]';
 const bunConstructor = '[data-cy="bun-constructor"]';
+const modalCloseButton = '[data-cy="modal-close-button"]';
 
 describe('проверка конструктора', function () {
   beforeEach(function () {
@@ -63,7 +64,7 @@ describe('проверка конструктора', function () {
 
     it('должен проверить закрытия модального окна на кнопку', function () {
       cy.get(bun).first().click();
-      cy.get('[data-cy="modal-close-button"]').first().click();
+      cy.get(modalCloseButton).first().click();
       cy.get(modals).should('not.exist');
     });
 
@@ -90,7 +91,21 @@ describe('проверка конструктора', function () {
       mainStore.last().click();
       mainStoreSecond.last().click();
 
+      cy.intercept('POST', 'api/orders').as('createOrder');
+
       cy.get("[data-cy='order']").contains('Оформить заказ').click();
+
+      cy.wait('@createOrder').then((interception) => {
+        const response = interception.response;
+
+        expect(response).to.not.be.undefined;
+
+        if (response) {
+          expect(response.statusCode).to.eq(200);
+          expect(response.body.order.number).to.eq(order.order.number);
+        }
+      });
+
       cy.get(modals).should('exist');
       cy.get(modals).contains(order.order.number.toString());
     });
@@ -100,11 +115,13 @@ describe('проверка конструктора', function () {
         const bunStore = cy.get(bun).first().children();
         bunStore.last().click();
 
+        cy.intercept('POST', 'api/orders').as('createOrder');
+
         cy.get("[data-cy='order']").contains('Оформить заказ').click();
       });
 
       it('должен проверить закрытия модального окна по кнопке', function () {
-        cy.get('[data-cy="modal-close-button"]').first().click();
+        cy.get(modalCloseButton).first().click();
         cy.get(modals).should('not.exist');
       });
 
@@ -122,7 +139,7 @@ describe('проверка конструктора', function () {
         bunStore.last().click();
 
         cy.get("[data-cy='order']").contains('Оформить заказ').click();
-        cy.get('[data-cy="modal-close-button"]').first().click();
+        cy.get(modalCloseButton).first().click();
         cy.get(bunConstructor).should('not.exist');
         cy.get(mainConstructor).should('not.exist');
       });

@@ -1,15 +1,10 @@
 import ingredientsReducer, {
-  getIngredients
+  getIngredients,
+  initialState
 } from '../slices/ingredients-slice';
 import { TIngredient } from '@utils-types';
 
 describe('ingredientsSlice', () => {
-  const initialState = {
-    data: [],
-    loading: false,
-    error: null
-  };
-
   it('должен обработать действие в состоянии pending и установить loading в true', () => {
     const action = getIngredients.pending.type;
     const state = ingredientsReducer(initialState, { type: action });
